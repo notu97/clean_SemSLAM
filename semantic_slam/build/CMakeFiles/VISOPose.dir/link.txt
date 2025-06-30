@@ -1,0 +1,2 @@
+/usr/bin/ar qc libVISOPose.a  CMakeFiles/VISOPose.dir/src/VISOPose.cpp.o
+/usr/bin/ranlib libVISOPose.a

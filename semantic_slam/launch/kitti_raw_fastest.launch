@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <!-- Arguments -->
+    <arg name="sequence_id"                         default="022" />
+    <arg name="save_result"                         default="true" />
+    <arg name="use_hungarian"                       default="false" />
+    <arg name="detect_loop_closure"                 default="true" />
+    <arg name="save_root"                           default="/home/hanwen/code/object_slam/semanticSLAM/estim_result/full_fastest/" />
+
+    <arg name="cam_topic"                           default="/cam0/image_raw"/>
+    <arg name="cam_info_topic"                      default="/cam1/camera_info"/>
+
+    <arg name="odom_topic"                          default="/viso_pose/relative_pose"/>
+
+    <arg name="global_frame"						default="/odom"/>
+    <arg name="robot_frame"							default="/base_link"/>
+
+    <!-- <arg name="calib_file"                          default="$(find semslam)/param/turtlebot.yaml"/> -->
+
+    <arg name="calib_file"                          default="$(find semantic_slam)/param/kitti_raw.yaml"/>
+
+    <arg name="detected_objects_topic"              default="/darknet_ros/bounding_boxes"/>
+    <arg name="keypoint_topic"                      default="img_keypoints"/>
+
+    <arg name="yolo"                                default="true"/>
+
+    <arg name="launch-args"                         default=""/>
+    <arg name="launch-delay"                        default="30.0"/>
+
+    <!-- Object tracking parameters -->  
+    <arg name="use_image_topic" default="false" /> <!-- Would turn off image topic if using passthrough tracker -->
+    <arg name="use_detection_topic" default="true" /> <!-- Not supported, but would turn off detection topic if using OpenCV's selectROI -->
+    <arg name="tracker_type" default="NAIVE" />  <!-- Options: BOOSTING, MIL, KCF, TLD, MEDIANFLOW, GOTURN, MOSSE -->
+    <arg name="reset_on_detection" default="true" />
+    <arg name="filter_2class" default="true" />
+    <arg name="detection_conf_threshold" default="0.80" />
+    <arg name="f2f_match_threshold" default="2.0" />
+    <arg name="missed_detection_threshold" default="2" />
+    <arg name="visualize" default="true" />
+
+    <param name="/yolo"                             value="$(arg yolo)" type="bool"/>
+
+    <node pkg="semantic_slam" type="semantic_slam_node" name="semantic_slam" output="screen" required="true"
+                launch-prefix="" >
+        <param name="odom_topic" value="$(arg odom_topic)" />
+        <param name="seq_id"                        value="$(arg sequence_id)"/>
+        <param name="image_topic"                   value="$(arg cam_topic)"/>
+        <param name="save_result"                   value="$(arg save_result)"/>
+        <param name="use_hungarian"                 value="$(arg use_hungarian)"/>
+        <param name="detect_loop_closure"           value="$(arg detect_loop_closure)"/>
+        <param name="save_root"                     value="$(arg save_root)"/>
+        <rosparam file="$(arg calib_file)"/>
+    </node>
+
+    <!-- Launch object detector -->
+    <!-- Make sure to: 1) configure your launch file -->
+    <!--               2) change the topic name for your camera in ros.yaml -->
+    <!--               3) change enable_opencv to true and enable_console_output to false to suppress all printing -->
+    <!--               4) use relative namespaces in ros.yaml -->
+    <!-- <include file="$(find darknet_ros)/launch/yolo_v3_voc_indoor.launch"/> -->
+
+
+    <include file="$(find darknet_ros)/launch/darknet_ros.launch">
+        <arg name="image" value="$(arg cam_topic)" />
+        <arg name="ros_param_file"  value="$(find darknet_ros)/config/kitti.yaml"/>
+
+        <arg name="network_param_file" value="$(find darknet_ros)/config/yolov3.yaml" />
+    </include>
+
+    <!-- Launch detection republisher -->
+    <!-- <node pkg="object_keypoint_detector" type="detection_republisher.py" name="detection_republisher" output="screen">
+        <param name="detection_topic"						      value="$(arg detected_objects_topic)"/>
+        <param name="detection_republished_topic"			value="$(arg detected_objects_topic_republished)"/>
+    </node> -->
+
+    <node pkg="semantic_slam"
+            type="object_tracking_node" 
+            name="object_tracker" 
+            output="screen" 
+            required="true" 
+            launch-prefix="">
+        <param name="platform" value="zed" />
+        <param name="image_topic" value="$(arg cam_topic)" />
+        <param name="detection_topic" value="$(arg detected_objects_topic)" />
+        <param name="use_image_topic" value="$(arg use_image_topic)" />
+        <param name="use_detection_topic" value="$(arg use_detection_topic)" />
+        <param name="tracker_type" value="$(arg tracker_type)" />
+        <param name="reset_on_detection" value="$(arg reset_on_detection)" />
+        <param name="filter_2class" value="$(arg filter_2class)" />
+        <param name="detection_conf_threshold" value="$(arg detection_conf_threshold)" />
+        <param name="f2f_match_threshold" value="$(arg f2f_match_threshold)" />
+        <param name="missed_detection_threshold" value="$(arg missed_detection_threshold)" />
+        <param name="visualize" value="$(arg visualize)" />
+    </node>
+
+    <!-- Launch keypoint detector -->
+    <!-- <node name="keypoint_detector" pkg="object_keypoint_detector" type="keypoint_detector.py" 
+                    required="true" output="log">
+
+        <param name="image_topic"                   value="$(arg cam_topic)"/>
+        <remap from="pose_estimator/img_keypoints"  to="semslam/$(arg keypoint_topic)"/>
+        <remap from="detected_objects"              to="object_tracker/tracked_objects"/>
+
+        <param name="model_type"                    value="large"/>
+        <param name="num_keypoints_file"            value="$(find object_keypoint_detector)/keypoint_description/pascal_num_keypoints.txt"/>
+        <param name="model_path"                    value="$(find object_keypoint_detector)/models/pascal.pt"/>
+
+        <param name="target_framerate"              value="10" />
+
+        <rosparam file="$(arg calib_file)"/>
+    </node> -->
+
+    <!-- Launch keypoint detector -->
+    <node name="keypoint_detector" pkg="object_keypoint_detector" type="keypoint_detector_torch_pascal.py" 
+                    required="true" output="screen">
+
+        <param name="image_topic"                   value="$(arg cam_topic)"/>
+        <remap from="pose_estimator/img_keypoints"  to="semslam/$(arg keypoint_topic)"/>
+        <remap from="detected_objects"              to="object_tracker/tracked_objects"/>
+
+        <param name="model_type"                    value="StackedHourglass"/>
+        <param name="num_keypoints_file"            value="$(find object_keypoint_detector)/keypoint_description/pascal_num_keypoints.txt"/>
+        <param name="model_path"                    value="$(find object_keypoint_detector)/models/pose-hg-pascal3d.t7"/>
+
+        <param name="target_framerate"              value="10" />
+    </node>
+
+    <node pkg="semantic_slam" type="kitti_raw_node" name="kitti_data_node" output="screen">
+        <param name="data_seq_id" value="$(arg sequence_id)" />
+        <param name="data_dir" value="/home/hanwen/data/kitti_raw/2011_09_26/2011_09_26_drive_0$(arg sequence_id)_sync" />
+        <param name="save_result"                   value="$(arg save_result)"/>
+        <param name="save_root"                     value="$(arg save_root)"/>
+        <param name="delay" value="5" />
+        <param name="rate" value="1" />
+    </node>
+
+    <node pkg="viso_pose" type="viso_node" name="viso_node" output="screen">
+        <param name="viso_px_sigma" value="4" />
+
+        <rosparam file="$(arg calib_file)" />
+    </node>
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find semantic_slam)/rviz/kitti.rviz" />
+
+</launch>

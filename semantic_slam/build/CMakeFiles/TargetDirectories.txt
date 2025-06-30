@@ -1,0 +1,5 @@
+/clean_SemSLAM/semantic_slam/build/CMakeFiles/rebuild_cache.dir
+/clean_SemSLAM/semantic_slam/build/CMakeFiles/edit_cache.dir
+/clean_SemSLAM/semantic_slam/build/CMakeFiles/semSLAM.dir
+/clean_SemSLAM/semantic_slam/build/CMakeFiles/VISOPose.dir
+/clean_SemSLAM/semantic_slam/build/CMakeFiles/libviso2.dir

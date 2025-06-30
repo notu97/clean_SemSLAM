@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblibviso2.a  CMakeFiles/libviso2.dir/src/libviso2/filter.cpp.o CMakeFiles/libviso2.dir/src/libviso2/matcher.cpp.o CMakeFiles/libviso2.dir/src/libviso2/matrix.cpp.o CMakeFiles/libviso2.dir/src/libviso2/reconstruction.cpp.o CMakeFiles/libviso2.dir/src/libviso2/triangle.cpp.o CMakeFiles/libviso2.dir/src/libviso2/viso.cpp.o CMakeFiles/libviso2.dir/src/libviso2/viso_mono.cpp.o CMakeFiles/libviso2.dir/src/libviso2/viso_stereo.cpp.o
+/usr/bin/ranlib liblibviso2.a
