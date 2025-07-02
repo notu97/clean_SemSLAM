@@ -63,6 +63,8 @@ VISOPose::setVisoParams(CameraInfo& cam0_info, CameraInfo& cam1_info)
 
     // std::cout<< "inside setVisoParams" << std::endl;
 
+
+
     viso_params_.calib.f = cam0_info.P[0];
     viso_params_.calib.cu = cam0_info.P[2];
     viso_params_.calib.cv = cam0_info.P[6];
@@ -72,6 +74,12 @@ VISOPose::setVisoParams(CameraInfo& cam0_info, CameraInfo& cam1_info)
     got_calibration_ = true;
     // std::cout << "caminfo callback" << std::endl;
     viso_ = boost::make_shared<VisualOdometryStereo>(viso_params_);
+
+    std::cout<< "Stereo Parameters: " << std::endl;
+    std::cout<< "f: " << viso_params_.calib.f << std::endl;
+    std::cout<< "cu: " << viso_params_.calib.cu << std::endl;
+    std::cout<< "cv: " << viso_params_.calib.cv << std::endl;
+    std::cout<< "base: " << viso_params_.base << std::endl;
 
     if (!viso_) {
         std::cerr << "viso_ is not initialized!" << std::endl;
@@ -190,8 +198,12 @@ VISOPose::tryProcessNextImages(boost::shared_ptr<cv::Mat> img0_data, boost::shar
     //     memcpy(img1_test.ptr(i), img1.ptr(i), img1.cols * sizeof(uint8_t));
     // }
 
-    // cv::imshow("left", img0_test);
-    // cv::imshow("right", img1_test);
+    // std::string debug_folder_0 = "/dataset/dbug_image_2/" + std::to_string(frame_num_) + ".png";
+    // std::string debug_folder_1 = "/dataset/dbug_image_3/" + std::to_string(frame_num_) + ".png";
+
+    // cv::imwrite(debug_folder_0, img0_test);
+    // cv::imwrite(debug_folder_1, img1_test);
+
 
     if (!initialized_) {
         // "not initialized" = this is the first image we process
@@ -200,8 +212,8 @@ VISOPose::tryProcessNextImages(boost::shared_ptr<cv::Mat> img0_data, boost::shar
         viso_->process(img0_data_u8, img1_data_u8, dims, false);
         initialized_ = true;
 
-        // free(img0_data);
-        // free(img1_data);
+        free(img0_data_u8);
+        free(img1_data_u8);
         return;
     }
     std::cout<<" Here: 4\n";
