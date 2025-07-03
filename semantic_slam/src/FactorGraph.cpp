@@ -1,7 +1,7 @@
 
 #include "semantic_slam/FactorGraph.h"
 
-#include <rosfmt/rosfmt.h>
+// #include <rosfmt/rosfmt.h>
 
 #include <gtsam/nonlinear/NonlinearFactorGraph.h>
 #include <gtsam/nonlinear/Values.h>
@@ -460,83 +460,83 @@ FactorGraph::addIterationCallback(IterationCallbackType callback)
     solver_options_.callbacks.push_back(callback_wrapper.get());
 }
 
-CeresNodePtr
-FactorGraph::findLastNodeBeforeTime(unsigned char symbol_chr, ros::Time time)
-{
-    if (nodes_.size() == 0)
-        return nullptr;
+// CeresNodePtr
+// FactorGraph::findLastNodeBeforeTime(unsigned char symbol_chr, ros::Time time)
+// {
+//     if (nodes_.size() == 0)
+//         return nullptr;
 
-    ros::Time last_time(0);
-    CeresNodePtr node = nullptr;
+//     ros::Time last_time(0);
+//     CeresNodePtr node = nullptr;
 
-    for (auto& key_node : nodes_) {
-        if (key_node.second->chr() != symbol_chr)
-            continue;
+//     for (auto& key_node : nodes_) {
+//         if (key_node.second->chr() != symbol_chr)
+//             continue;
 
-        if (!key_node.second->time())
-            continue;
+//         if (!key_node.second->time())
+//             continue;
 
-        if (key_node.second->time() > last_time &&
-            key_node.second->time() <= time) {
-            last_time = *key_node.second->time();
-            node = key_node.second;
-        }
-    }
+//         if (key_node.second->time() > last_time &&
+//             key_node.second->time() <= time) {
+//             last_time = *key_node.second->time();
+//             node = key_node.second;
+//         }
+//     }
 
-    return node;
-}
+//     return node;
+// }
 
-CeresNodePtr
-FactorGraph::findFirstNodeAfterTime(unsigned char symbol_chr, ros::Time time)
-{
-    if (nodes_.size() == 0)
-        return nullptr;
+// CeresNodePtr
+// FactorGraph::findFirstNodeAfterTime(unsigned char symbol_chr, ros::Time time)
+// {
+//     if (nodes_.size() == 0)
+//         return nullptr;
 
-    ros::Time first_time = ros::TIME_MAX;
-    CeresNodePtr node = nullptr;
+//     ros::Time first_time = ros::TIME_MAX;
+//     CeresNodePtr node = nullptr;
 
-    for (auto& key_node : nodes_) {
-        if (key_node.second->chr() != symbol_chr)
-            continue;
+//     for (auto& key_node : nodes_) {
+//         if (key_node.second->chr() != symbol_chr)
+//             continue;
 
-        if (!key_node.second->time())
-            continue;
+//         if (!key_node.second->time())
+//             continue;
 
-        if (key_node.second->time() <= first_time &&
-            key_node.second->time() >= time) {
-            first_time = *key_node.second->time();
-            node = key_node.second;
-        }
-    }
+//         if (key_node.second->time() <= first_time &&
+//             key_node.second->time() >= time) {
+//             first_time = *key_node.second->time();
+//             node = key_node.second;
+//         }
+//     }
 
-    return node;
-}
+//     return node;
+// }
 
-CeresNodePtr
-FactorGraph::findNearestNode(unsigned char symbol_chr, ros::Time time)
-{
-    if (nodes_.size() == 0)
-        return nullptr;
+// CeresNodePtr
+// FactorGraph::findNearestNode(unsigned char symbol_chr, ros::Time time)
+// {
+//     if (nodes_.size() == 0)
+//         return nullptr;
 
-    ros::Duration shortest_duration = ros::DURATION_MAX;
-    CeresNodePtr node = nullptr;
+//     ros::Duration shortest_duration = ros::DURATION_MAX;
+//     CeresNodePtr node = nullptr;
 
-    for (auto& key_node : nodes_) {
-        if (key_node.second->chr() != symbol_chr)
-            continue;
+//     for (auto& key_node : nodes_) {
+//         if (key_node.second->chr() != symbol_chr)
+//             continue;
 
-        if (!key_node.second->time())
-            continue;
+//         if (!key_node.second->time())
+//             continue;
 
-        if (abs_duration(time - *key_node.second->time()) <=
-            shortest_duration) {
-            shortest_duration = abs_duration(time - *key_node.second->time());
-            node = key_node.second;
-        }
-    }
+//         if (abs_duration(time - *key_node.second->time()) <=
+//             shortest_duration) {
+//             shortest_duration = abs_duration(time - *key_node.second->time());
+//             node = key_node.second;
+//         }
+//     }
 
-    return node;
-}
+//     return node;
+// }
 
 boost::shared_ptr<gtsam::NonlinearFactorGraph>
 FactorGraph::getGtsamGraph() const

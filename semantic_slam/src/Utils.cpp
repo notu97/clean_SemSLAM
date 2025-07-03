@@ -3,10 +3,10 @@
 #include <ceres/ceres.h>
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Geometry>
-#include <ros/ros.h>
+// #include <ros/ros.h>
 
-#include <geometry_msgs/PoseWithCovarianceStamped.h>
-#include <sensor_msgs/Imu.h>
+// #include <geometry_msgs/PoseWithCovarianceStamped.h>
+// #include <sensor_msgs/Imu.h>
 
 #include <boost/optional.hpp>
 
@@ -79,22 +79,22 @@ findSimilarityTransform(const Eigen::MatrixXd& S1,
     }
 }
 
-void
-FromROSMsg(const geometry_msgs::PoseWithCovariance& msg,
-           Eigen::Vector3d& position,
-           Eigen::Quaterniond& orientation,
-           Eigen::Matrix<double, 6, 6>& covariance)
-{
+// void
+// FromROSMsg(const geometry_msgs::PoseWithCovariance& msg,
+//            Eigen::Vector3d& position,
+//            Eigen::Quaterniond& orientation,
+//            Eigen::Matrix<double, 6, 6>& covariance)
+// {
 
-    position << msg.pose.position.x, msg.pose.position.y, msg.pose.position.z;
+//     position << msg.pose.position.x, msg.pose.position.y, msg.pose.position.z;
 
-    orientation.x() = msg.pose.orientation.x;
-    orientation.y() = msg.pose.orientation.y;
-    orientation.z() = msg.pose.orientation.z;
-    orientation.w() = msg.pose.orientation.w;
+//     orientation.x() = msg.pose.orientation.x;
+//     orientation.y() = msg.pose.orientation.y;
+//     orientation.z() = msg.pose.orientation.z;
+//     orientation.w() = msg.pose.orientation.w;
 
-    boostArrayToEigen<6, 6>(msg.covariance, covariance);
-}
+//     boostArrayToEigen<6, 6>(msg.covariance, covariance);
+// }
 
 // void FromROSMsg(const geometry_msgs::PoseWithCovariance& msg,
 //                 gtsam::Pose3& pose,
@@ -108,28 +108,28 @@ FromROSMsg(const geometry_msgs::PoseWithCovariance& msg,
 //     gtsam::Point3(position));
 // }
 
-void
-FromROSMsg(const sensor_msgs::Imu& msg,
-           Eigen::Vector3d& omega,
-           Eigen::Matrix3d& omega_cov,
-           Eigen::Vector3d& accel,
-           Eigen::Matrix3d& accel_cov)
-{
+// void
+// FromROSMsg(const sensor_msgs::Imu& msg,
+//            Eigen::Vector3d& omega,
+//            Eigen::Matrix3d& omega_cov,
+//            Eigen::Vector3d& accel,
+//            Eigen::Matrix3d& accel_cov)
+// {
 
-    // orientation.x() = msg.orientation.x;
-    // orientation.y() = msg.orientation.y;
-    // orientation.z() = msg.orientation.z;
-    // orientation.w() = msg.orientation.w;
+//     // orientation.x() = msg.orientation.x;
+//     // orientation.y() = msg.orientation.y;
+//     // orientation.z() = msg.orientation.z;
+//     // orientation.w() = msg.orientation.w;
 
-    omega << msg.angular_velocity.x, msg.angular_velocity.y,
-      msg.angular_velocity.z;
+//     omega << msg.angular_velocity.x, msg.angular_velocity.y,
+//       msg.angular_velocity.z;
 
-    accel << msg.linear_acceleration.x, msg.linear_acceleration.y,
-      msg.linear_acceleration.z;
+//     accel << msg.linear_acceleration.x, msg.linear_acceleration.y,
+//       msg.linear_acceleration.z;
 
-    boostArrayToEigen<3, 3>(msg.angular_velocity_covariance, omega_cov);
-    boostArrayToEigen<3, 3>(msg.linear_acceleration_covariance, accel_cov);
-}
+//     boostArrayToEigen<3, 3>(msg.angular_velocity_covariance, omega_cov);
+//     boostArrayToEigen<3, 3>(msg.linear_acceleration_covariance, accel_cov);
+// }
 
 Eigen::Matrix<double, 2, 9>
 computeProjectionJacobian(const Pose3& G_T_I,

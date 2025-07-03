@@ -115,15 +115,15 @@ if (MKL_FOUND)
   include_directories(${MKL_INCLUDE_DIR})
 endif()
 
-# add_library(SemanticMapper SHARED
-#   src/Key.cpp
-#   src/Symbol.cpp
-#   src/Camera.cpp
-#   src/CameraSet.cpp
+add_library(SemanticMapper SHARED
+  src/Key.cpp
+  src/Symbol.cpp
+  src/Camera.cpp
+  src/CameraSet.cpp
 #   src/CameraCalibration.cpp
 #   src/Pose3.cpp
 #   src/SemanticKeyframe.cpp
-#   # src/Utils.cpp
+  src/Utils.cpp
 #   src/munkres.cpp
 #   src/MLDataAssociator.cpp
 #   src/permanent.cpp
@@ -180,16 +180,16 @@ endif()
 #   src/feature_tracker/TwoPointRansac.cpp
 #   src/feature_tracker/FeatureTracker.cpp
 #   src/feature_tracker/FivePointRansac.cpp
-# )
+)
 
-# target_link_libraries(SemanticMapper
-#   ${catkin_LIBRARIES}
-#   ${Boost_LIBRARIES}
-#   ${OpenCV_LIBRARIES}
-#   ${CERES_LIBRARIES}
-#   # ${MKL_LIBRARIES}
-#   gtsam
-# )
+target_link_libraries(SemanticMapper
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+  ${CERES_LIBRARIES}
+  # ${MKL_LIBRARIES}
+  gtsam
+)
 
 
 add_executable(semSLAM src/semSLAM.cpp)
