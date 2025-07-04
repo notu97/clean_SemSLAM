@@ -6,7 +6,7 @@
 class ImuBiasNode : public VectorNode<6>
 {
   public:
-    ImuBiasNode(Symbol sym, boost::optional<ros::Time> time = boost::none);
+    ImuBiasNode(Symbol sym, boost::optional<TimePoint> time = boost::none);
 
     using Base = VectorNode<6>;
 

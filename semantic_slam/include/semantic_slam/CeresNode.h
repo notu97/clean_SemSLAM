@@ -8,7 +8,7 @@
 // #include <ros/ros.h>
 
 // #include <gtsam/base/Value.h>
-using TimePoint = std::chrono::steady_clock::time_point;
+// using TimePoint = std::chrono::steady_clock::time_point;
 
 namespace gtsam {
 class Value;

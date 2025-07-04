@@ -196,9 +196,8 @@ FactorGraph::addNode(CeresNodePtr node)
     if (!node)
         return;
     if (nodes_.find(node->key()) != nodes_.end()) {
-        throw std::runtime_error(fmt::format(
-          "Tried to add already existing node with symbol {} to graph",
-          DefaultKeyFormatter(node->key())));
+        throw std::runtime_error(std::string("Tried to add already existing node with symbol ") +
+          DefaultKeyFormatter(node->key()));
     }
 
     std::lock_guard<std::mutex> lock(mutex_);

@@ -6,10 +6,12 @@
 
 #include <eigen3/Eigen/Core>
 #include <map>
-#include <ros/ros.h>
+// #include <ros/ros.h>
 #include <vector>
 
 #include <boost/enable_shared_from_this.hpp>
+
+// using TimePoint = std::chrono::steady_clock::time_point;
 
 class FactorGraph;
 class EstimatedObject;
@@ -26,14 +28,14 @@ class SemanticKeyframe : public boost::enable_shared_from_this<SemanticKeyframe>
     using This = SemanticKeyframe;
     using Ptr = boost::shared_ptr<This>;
 
-    SemanticKeyframe(Key key, ros::Time time, bool include_inertial = false);
+    SemanticKeyframe(Key key, TimePoint time, bool include_inertial = false);
 
     Key key() const { return key_; }
     Key bias_key() const { return Symbol('b', index()); }
     int index() const { return Symbol(key_).index(); }
     unsigned char chr() const { return Symbol(key_).chr(); }
 
-    ros::Time time() const { return time_; }
+    TimePoint time() const { return time_; }
 
     Pose3& pose() { return pose_; }
     const Pose3& pose() const { return pose_; }
@@ -119,7 +121,7 @@ class SemanticKeyframe : public boost::enable_shared_from_this<SemanticKeyframe>
         return visible_geometric_features_;
     }
 
-    ros::Time image_time;
+    TimePoint image_time;
 
     // Only used/valid if odometry source is inertial
     boost::shared_ptr<VectorNode<3>>& velocity_node() { return velocity_node_; }
@@ -148,7 +150,7 @@ class SemanticKeyframe : public boost::enable_shared_from_this<SemanticKeyframe>
 
   private:
     Key key_;
-    ros::Time time_;
+    TimePoint time_;
 
     bool in_graph_;
 

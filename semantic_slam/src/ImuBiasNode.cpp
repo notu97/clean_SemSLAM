@@ -2,7 +2,7 @@
 
 #include <gtsam/navigation/CombinedImuFactor.h>
 
-ImuBiasNode::ImuBiasNode(Symbol sym, boost::optional<ros::Time> time)
+ImuBiasNode::ImuBiasNode(Symbol sym, boost::optional<TimePoint> time)
   : Base(sym, time)
 {}
 

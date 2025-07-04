@@ -5,6 +5,7 @@
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Geometry>
 #include <boost/array.hpp>
+#include <chrono>
 
 // #include <ros/ros.h>
 
@@ -16,6 +17,7 @@
 #include "semantic_slam/Pose3.h"
 
 #include <chrono>
+using TimePoint = std::chrono::steady_clock::time_point;
 
 #define CONCAT_2(A, B) A##B
 #define CONCAT_1(A, B) CONCAT_2(A, B)
@@ -139,6 +141,11 @@ clamp_angle(double angle);
  */
 Eigen::Matrix3d
 findRotation(const Eigen::MatrixXd& S1, const Eigen::MatrixXd& S2);
+
+/**
+ * Convert chrono::system_clock::time_point to double
+ */
+double timePointToSeconds(const boost::optional<std::chrono::steady_clock::time_point>& tpOpt);
 
 /**
  * Aligns the points S2 (3xN) to S1 (3xN)

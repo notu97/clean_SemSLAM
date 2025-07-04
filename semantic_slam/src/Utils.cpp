@@ -4,7 +4,7 @@
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Geometry>
 // #include <ros/ros.h>
-
+#include <chrono>
 // #include <geometry_msgs/PoseWithCovarianceStamped.h>
 // #include <sensor_msgs/Imu.h>
 
@@ -51,6 +51,17 @@ findRotation(const Eigen::MatrixXd& S1, const Eigen::MatrixXd& S2)
     reflect << 1, 1, sgn_fn(R1.determinant());
 
     return svd.matrixU() * reflect.asDiagonal() * svd.matrixV().transpose();
+}
+
+
+double timePointToSeconds(const boost::optional<std::chrono::steady_clock::time_point>& tpOpt) {
+    if (!tpOpt) {
+        return 0.0; // or use NaN / throw / sentinel value depending on your case
+    }
+
+    auto duration = tpOpt->time_since_epoch();
+    auto seconds = std::chrono::duration_cast<std::chrono::duration<double>>(duration);
+    return seconds.count();
 }
 
 void

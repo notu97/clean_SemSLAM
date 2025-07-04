@@ -5,6 +5,7 @@
 #include "semantic_slam/ceres_cost_terms/ceres_inertial.h"
 #include <gtsam/nonlinear/NonlinearFactorGraph.h>
 #include <gtsam/slam/BetweenFactor.h>
+#include "semantic_slam/Utils.h"
 
 CeresImuFactor::CeresImuFactor(boost::shared_ptr<SE3Node> pose0,
                                boost::shared_ptr<Vector3dNode> vel0,
@@ -29,8 +30,8 @@ CeresImuFactor::CeresImuFactor(boost::shared_ptr<SE3Node> pose0,
     nodes_.push_back(gravity);
 
     if (t0 < 0.0 || t1 < 0.0) {
-        t0_ = pose0->time()->toSec();
-        t1_ = pose1->time()->toSec();
+        t0_ = timePointToSeconds(pose0->time()); // Convert from ms to seconds
+        t1_ = timePointToSeconds(pose1->time()); // Convert from ms to seconds
     } else {
         t0_ = t0;
         t1_ = t1;

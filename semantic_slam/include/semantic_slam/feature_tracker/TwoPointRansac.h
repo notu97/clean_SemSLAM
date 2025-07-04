@@ -7,7 +7,7 @@
 #include <eigen3/Eigen/SVD>
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <ros/ros.h>
+// #include <ros/ros.h>
 #include <vector>
 
 /* @brief Two pointRANSAC class.

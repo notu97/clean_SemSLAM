@@ -10,7 +10,7 @@
 
 #include "semantic_slam/Pose3.h"
 // #include "semantic_slam/Utils.h"
-// #include "semantic_slam/keypoints/geometry.h"
+#include "semantic_slam/keypoints/geometry.h"
 // #include "omnigraph/keypoints/quaternion_math.h"
 
 #include "ceres/cost_function.h"

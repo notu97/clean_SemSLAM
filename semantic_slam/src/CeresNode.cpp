@@ -1,7 +1,7 @@
 
 #include "semantic_slam/CeresNode.h"
 
-CeresNode::CeresNode(Key key)
+CeresNode::CeresNode(Key key, boost::optional<TimePoint> time)
   : active_(false)
   , key_(key)
   , time_(time)

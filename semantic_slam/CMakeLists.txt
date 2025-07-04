@@ -120,66 +120,66 @@ add_library(SemanticMapper SHARED
   src/Symbol.cpp
   src/Camera.cpp
   src/CameraSet.cpp
-#   src/CameraCalibration.cpp
-#   src/Pose3.cpp
-#   src/SemanticKeyframe.cpp
+  src/CameraCalibration.cpp
+  src/Pose3.cpp
+  src/SemanticKeyframe.cpp
   src/Utils.cpp
-#   src/munkres.cpp
-#   src/MLDataAssociator.cpp
-#   src/permanent.cpp
-#   src/ProbDataAssociator.cpp
+  src/munkres.cpp
+  src/MLDataAssociator.cpp
+  src/permanent.cpp
+  src/ProbDataAssociator.cpp
   
-#   src/inertial/InertialIntegrator.cpp
+  src/inertial/InertialIntegrator.cpp
 
-#   src/ceres_cost_terms/ceres_pose_prior.cpp
-#   src/ceres_cost_terms/ceres_projection.cpp
-#   src/ceres_cost_terms/ceres_bbox_projection.cpp
-#   src/ceres_cost_terms/ceres_structure.cpp
-#   src/ceres_cost_terms/ceres_structure_projection.cpp
-#   src/ceres_cost_terms/ceres_between.cpp
-#   src/ceres_cost_terms/ceres_inertial.cpp
-#   src/LocalParameterizations.cpp
+  src/ceres_cost_terms/ceres_pose_prior.cpp
+  src/ceres_cost_terms/ceres_projection.cpp
+  src/ceres_cost_terms/ceres_bbox_projection.cpp
+  src/ceres_cost_terms/ceres_structure.cpp
+  src/ceres_cost_terms/ceres_structure_projection.cpp
+  src/ceres_cost_terms/ceres_between.cpp
+  src/ceres_cost_terms/ceres_inertial.cpp
+  src/LocalParameterizations.cpp
 
-#   src/CeresNode.cpp
-#   src/CeresFactor.cpp
-#   src/CeresProjectionFactor.cpp
-#   src/CeresBetweenFactor.cpp
-#   src/CeresStructureFactor.cpp
-#   src/CeresImuFactor.cpp
-#   src/CeresSE3PriorFactor.cpp
-#   src/MultiProjectionFactor.cpp
-#   src/SmartProjectionFactor.cpp
-#   src/keypoints/gtsam/StructureFactor.cpp
-#   src/FactorGraph.cpp
-#   src/ImuBiasNode.cpp
+  src/CeresNode.cpp
+  src/CeresFactor.cpp
+  src/CeresProjectionFactor.cpp
+  src/CeresBetweenFactor.cpp
+  src/CeresStructureFactor.cpp
+  src/CeresImuFactor.cpp
+  src/CeresSE3PriorFactor.cpp
+  src/MultiProjectionFactor.cpp
+  src/SmartProjectionFactor.cpp
+  src/keypoints/gtsam/StructureFactor.cpp
+  src/FactorGraph.cpp
+  src/ImuBiasNode.cpp
 
-#   src/keypoints/EstimatedKeypoint.cpp
-#   src/keypoints/geometry.cpp
-#   src/keypoints/EstimatedObject.cpp
-#   src/keypoints/StructureOptimizationProblem.cpp
+  # src/keypoints/EstimatedKeypoint.cpp
+  # src/keypoints/geometry.cpp
+  # src/keypoints/EstimatedObject.cpp
+  # src/keypoints/StructureOptimizationProblem.cpp
 
-#   src/LoopCloser.cpp
-#   # src/GeometricFeatureHandler.cpp
-#   # src/SemanticSmoother.cpp
-#   # src/SemanticMapper.cpp
-#   # src/ExternalOdometryHandler.cpp
-#   # src/InertialOdometryHandler.cpp
+  src/LoopCloser.cpp
+  # src/GeometricFeatureHandler.cpp
+  # src/SemanticSmoother.cpp
+  # src/SemanticMapper.cpp
+  # src/ExternalOdometryHandler.cpp
+  # src/InertialOdometryHandler.cpp
 
-#   # src/presenters/GeometricMapPresenter.cpp
-#   # src/presenters/SemanticCovisibilityPresenter.cpp
-#   # src/presenters/ObjectMeshPresenter.cpp
-#   # src/presenters/ObjectPosePresenter.cpp
-#   # src/presenters/TrajectoryPresenter.cpp
-#   # src/presenters/PosePresenter.cpp
-#   # src/presenters/ObjectKeypointPresenter.cpp
-#   # src/presenters/GeometricCovisibilityPresenter.cpp
-#   # src/presenters/OdometryTransformPresenter.cpp
-#   # src/presenters/PoseTransformPresenter.cpp
+  # src/presenters/GeometricMapPresenter.cpp
+  # src/presenters/SemanticCovisibilityPresenter.cpp
+  # src/presenters/ObjectMeshPresenter.cpp
+  # src/presenters/ObjectPosePresenter.cpp
+  # src/presenters/TrajectoryPresenter.cpp
+  # src/presenters/PosePresenter.cpp
+  # src/presenters/ObjectKeypointPresenter.cpp
+  # src/presenters/GeometricCovisibilityPresenter.cpp
+  # src/presenters/OdometryTransformPresenter.cpp
+  # src/presenters/PoseTransformPresenter.cpp
 
-#   src/feature_tracker/ORBextractor.cpp
-#   src/feature_tracker/TwoPointRansac.cpp
-#   src/feature_tracker/FeatureTracker.cpp
-#   src/feature_tracker/FivePointRansac.cpp
+  # src/feature_tracker/ORBextractor.cpp
+  # src/feature_tracker/TwoPointRansac.cpp
+  # src/feature_tracker/FeatureTracker.cpp
+  # src/feature_tracker/FivePointRansac.cpp
 )
 
 target_link_libraries(SemanticMapper

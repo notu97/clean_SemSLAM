@@ -10,7 +10,7 @@
 #include <unordered_map>
 
 SemanticKeyframe::SemanticKeyframe(Key key,
-                                   ros::Time time,
+                                   TimePoint time,
                                    bool include_inertial)
   : key_(key)
   , time_(time)
